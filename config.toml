@@ -1,0 +1,47 @@
+baseURL = "https://vjabrayilov.github.io"
+title = "Vahab Jabrayilov"
+theme = "researcher"
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  author = "Vahab Jabrayilov"
+  favicon = "favicon.ico"
+  lang = "en"
+  # [params.footer]
+  #   text = "By Vahab Jabrayilov"
+  [params.style]  # appearance options (can be omitted)
+    fontFamily = "Inconsolata"
+    pageWidth = "750px"
+    avatarSize = "200px"
+    colorBlack = "#222222"
+    colorRed = "#dc3545"
+  [[params.socialIcons]]
+    icon = "fab fa-github"
+    title = "Github"
+    url = "https://github.com/vjabrayilov"
+  [[params.socialIcons]]
+    icon = "fab fa-twitter"
+    title = "Twitter"
+    url = "https://twitter.com/vjabrayilov7"
+
+
+[permalinks]
+  "/" = "/:filename"
+
+[menu]
+  [[menu.main]]
+    name = "About"
+    url  = "/about"
+    weight = 1
+  [[menu.main]]
+    name = "Contact"
+    url  = "/contact"
+    weight = 2
+  [[menu.main]]
+    name = "Blog"
+    url = "https://vjabrayilov.github.io/notes/"
+    weight = 3
+  [[menu.main]]
+    name = "Resume"
+    url = "/resume.pdf"
+    weight = 4

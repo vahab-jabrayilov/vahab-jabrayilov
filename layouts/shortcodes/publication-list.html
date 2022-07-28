@@ -1,0 +1,63 @@
+{{ $t := .Site.GetPage "publications" }}
+{{ $rscPages := $t.Resources.ByType "page"}}
+
+{{if gt (len $rscPages) 0}}
+<ul class="publications">
+    {{ range $page := $rscPages}}
+    <li class="publication">
+
+        <div class="section-1 w-80">
+            <span>
+                {{$page.Params.title}},
+            </span>
+
+            <span class="text-muted publication-date">
+                {{substr ($page.Params.date.Format "2006-01-02") 0 4}},
+            </span>
+
+            <span class="text-muted publication-name">
+                {{$page.Params.publication}}
+            </span>
+
+        </div>
+
+        <div class="section-2 text-muted w-100">
+
+            {{ $authors := $page.Params.authors }}
+
+            {{ if $authors }}
+            {{range $i, $author := $authors}}
+            <span>
+                {{$author}}
+            </span>
+            {{ if lt $i (sub (len $authors) 1)}}
+            <span class="separator" style="margin-left: -1%">
+                ,
+            </span>
+            {{end}}
+            {{end}}
+            {{end}}
+
+        </div>
+
+        {{ $links := $page.Params.links }}
+        {{ if $links }}
+        <div class="section-3  w-100">
+            {{range $link_name, $link_url := $links}}
+                {{ if $link_url }}
+            <a class="main_color text-decoration-none rounded" rel="noreferrer" href="{{$link_url}}" target="_blank">
+                {{$link_name}}
+            </a>
+                {{end}}
+            {{end}}
+        </div>
+        {{end}}
+
+
+
+    </li>
+
+    {{end}}
+
+</ul>
+{{end}}

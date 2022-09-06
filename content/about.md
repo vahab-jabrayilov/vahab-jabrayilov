@@ -6,7 +6,7 @@ title: "About"
 
 {{< figure class="avatar" src="/img/vjabrayilov.png" alt="vjabrayilov's picture">}}
 <!-- TODO: improve this -->
-I am a finaly year udergraduate student at Middle East Techincal University.
+I am a final year undergraduate student at Middle East Techincal University.
 
 ## Education
 #### [Middle East Technical University](https://www.metu.edu.tr/) 

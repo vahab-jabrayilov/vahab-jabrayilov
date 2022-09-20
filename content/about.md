@@ -56,7 +56,7 @@ Bachelor of Science - Computer Engineering
 
 ## Publications
 
-<!-- {{< publication-list >}} -->
+{{< publication-list >}}
 
 <!-- ## Presentations -->
 

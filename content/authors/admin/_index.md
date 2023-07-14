@@ -14,7 +14,7 @@ status:
 superuser: true
 
 # Role/position/tagline
-role: CS Ph.D. Student
+role: CS PhD Student
 
 # Organizations/Affiliations to show in About widget
 organizations:
@@ -61,9 +61,12 @@ education:
     # - course: MEng in Artificial Intelligence
     #   institution: Massachusetts Institute of Technology
     #   year: 2009
+    - course: PhD in Computer Science
+      institution: Columbia University
     - course: BSc in Computer Engineering
       institution: Middle East Technical University
       year: 2023
+
 superuser: true
 status:
   icon: ☕️

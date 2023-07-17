@@ -77,7 +77,7 @@ sections:
           date_start: '2023-06-19'
           date_end: '2023-08-19'
           description: |2-
-              - Worked on "Detecting Metastable Failures in Distributed Systems" as a part of [RS3LAB](https://rs3lab.github.io/) under the spervision of [Sanidhya Kashyap](https://sanidhya.github.io/).
+              - Worked on "Detecting Metastable Failures in Distributed Systems" as a part of [RS3LAB](https://rs3lab.github.io/) under the supervision of [Sanidhya Kashyap](https://sanidhya.github.io/).
               - Developed benchmarks for exhibiting metastability.
               - Modeleted distributed systems as Petri Net models.
         - title: Software Development Engineer Intern
@@ -100,7 +100,7 @@ sections:
           date_start: '2021-10-01'
           date_end: '2022-05-01'
           description: |2-
-              - Worked under supervision of [Abutalib Aghayev](https://agayev.github.io/).
+              - Worked under the supervision of [Abutalib Aghayev](https://agayev.github.io/).
               - Implemented a high performance key value store with MultiPaxos consensus algorithm in Go, Java, C++ and Rust. 
         - title: Student Researcher
           company: Middle East Technical University
@@ -110,8 +110,19 @@ sections:
           date_start: '2022-01-01'
           date_end: '2022-06-01'
           description: |2-
-              - Worked in [WINS Lab](https://wins.ceng.metu.edu.tr/) under supervision of [Pelin Angin](https://user.ceng.metu.edu.tr/~pangin/).
+              - Worked at [WINS Lab](https://wins.ceng.metu.edu.tr/) under the supervision of [Pelin Angin](https://user.ceng.metu.edu.tr/~pangin/).
               - Deploy a Kubernetes cluster with vulnerable Docker application images. Simulated attacks and collected ML training data. 
+        - title: Software Development Engineer
+          company: KibritTech
+          company_url: 'kibrit.tech'
+          company_logo: kibrit
+          location: Baku, Azerbaijan
+          date_start: '2021-02-01'
+          date_end: '2021-10-01'
+          description: |2-
+              - Reduced response time of real-time monitoring service for call center management solution implementing caching layer.
+              - Integrated several third party chat applications to the solution.
+              - Acted on-call engineer to solve production problems.
                 
                 
     design:

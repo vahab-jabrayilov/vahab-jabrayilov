@@ -88,7 +88,7 @@ sections:
           date_start: '2022-05-01'
           date_end: '2022-09-01'
           description: |2-
-              - Contributed to `Thanos` project under the Cloud Native Computing Foundation(CNCF).
+              - Contributed to [Thanos](https://thanos.io/) project under the [Cloud Native Computing Foundation](cncf.io).
               - Optimized compaction/downsampling algorithm of the existing system to run on the fly without using disk
               - Wrote unit and integration tests
               - Devised and implemented a new block reader/writer interface and documented the process.

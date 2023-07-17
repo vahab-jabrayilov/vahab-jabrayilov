@@ -254,6 +254,7 @@ sections:
   #     columns: '2'git ad
   #     view: card
   - block: collection
+    id: publications
     content:
       title: Publications
       # text: |-

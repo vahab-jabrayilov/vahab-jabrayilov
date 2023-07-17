@@ -102,6 +102,16 @@ sections:
           description: |2-
               - Worked under supervision of [Abutalib Aghayev](https://agayev.github.io/).
               - Implemented a high performance key value store with MultiPaxos consensus algorithm in Go, Java, C++ and Rust. 
+        - title: Student Researcher
+          company: Middle East Technical University
+          company_url: 'metu.edu.tr'
+          company_logo: metu
+          location: Ankara, Turkey
+          date_start: '2022-01-01'
+          date_end: '2022-06-01'
+          description: |2-
+              - Worked in [WINS Lab](https://wins.ceng.metu.edu.tr/) under supervision of [Pelin Angin](https://user.ceng.metu.edu.tr/~pangin/).
+              - Deploy a Kubernetes cluster with vulnerable Docker application images. Simulated attacks and collected ML training data. 
                 
                 
     design:

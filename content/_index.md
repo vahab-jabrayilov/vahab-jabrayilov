@@ -94,13 +94,13 @@ sections:
               - Devised and implemented a new block reader/writer interface and documented the process.
         - title: Student Researcher
           company: Penn State University
-          company_url: 'psu.edu'
+          company_url: 'https://psu.edu'
           company_logo: psu
           location: Remote, University Park, PA, USA
           date_start: '2021-10-01'
           date_end: '2022-05-01'
           description: |2-
-              - Worked under the supervision of [Abutalib Aghayev](https://agayev.github.io/).
+              - Worked at [Computer Systems Lab](https://csl.cse.psu.edu/) under the supervision of [Abutalib Aghayev](https://agayev.github.io/).
               - Implemented a high performance key value store with MultiPaxos consensus algorithm in Go, Java, C++ and Rust. 
         - title: Student Researcher
           company: Middle East Technical University
@@ -129,7 +129,7 @@ sections:
           company_logo: metu
           date_start: '2021-03-01'
           date_end: '2021-07-01'
-          description: Conducted lab sessions and office hours for 100+ students at `CENG240-Pythin Programming for Engineers`.
+          description: Conducted lab sessions and office hours for 100+ students at [CENG240-Python Programming for Engineers](https://ceng240.github.io/).
         - title: Student Researcher
           company: eiLink
           company_url: 'https://eilink.az/home'

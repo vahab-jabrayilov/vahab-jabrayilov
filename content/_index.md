@@ -72,7 +72,7 @@ sections:
         - title: Student Researcher
           company: EPFL
           company_url: 'https://www.epfl.ch/en/'
-          company_logo: epfl
+          company_logo: org-x
           location: Lausanne. Switzerland
           date_start: '2023-19-06'
           date_end: '2023-19-08'

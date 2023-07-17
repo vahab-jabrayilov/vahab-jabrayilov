@@ -86,7 +86,7 @@ sections:
           company_logo: GSoC_logo
           location: Remote, Mountain View, CA, USA
           date_start: '2022-05-01'
-          date_end: '2020-09-01'
+          date_end: '2022-09-01'
           description: |2-
               - Contributed to `Thanos` project under the Cloud Native Computing Foundation(CNCF).
               - Optimized compaction/downsampling algorithm of the existing system to run on the fly without using disk

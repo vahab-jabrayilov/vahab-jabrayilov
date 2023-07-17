@@ -1,4 +1,54 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts | Vahab Jabrayilov</title><link>https://vjabrayilov.github.io/post/</link><atom:link href="https://vjabrayilov.github.io/post/index.xml" rel="self" type="application/rss+xml"/><description>Posts</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 18 Jul 2022 00:00:00 +0000</lastBuildDate><image><url>https://vjabrayilov.github.io/media/icon_hufdc9ffe2c12a5bb5ad2cfdfce17ddfaa_56068_512x512_fill_lanczos_center_3.png</url><title>Posts</title><link>https://vjabrayilov.github.io/post/</link></image><item><title>Kafka vs RabbitMQ</title><link>https://vjabrayilov.github.io/post/kafkavsrabbit/</link><pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/kafkavsrabbit/</guid><description>&lt;ul>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts | Vahab Jabrayilov</title><link>https://vjabrayilov.github.io/post/</link><atom:link href="https://vjabrayilov.github.io/post/index.xml" rel="self" type="application/rss+xml"/><description>Posts</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 06 Sep 2022 00:00:00 +0000</lastBuildDate><image><url>https://vjabrayilov.github.io/media/icon_hufdc9ffe2c12a5bb5ad2cfdfce17ddfaa_56068_512x512_fill_lanczos_center_3.png</url><title>Posts</title><link>https://vjabrayilov.github.io/post/</link></image><item><title/><link>https://vjabrayilov.github.io/post/serverlessdesignpatterns/</link><pubDate>Tue, 06 Sep 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/serverlessdesignpatterns/</guid><description>&lt;h2 id="review">Review&lt;/h2>
+&lt;p>Authors have a security background and paper aims at utilizing serverless design patterns in security applications. They solely focus on AWS Lambda, and assume that all the responsibility to secure lambda execution lies on the cloud provider. However, customers are also responsible to secure their communication. They briefly describe six design patterns and how one can use them to develop a security oriented application.&lt;/p>
+&lt;p>&lt;strong>Periodic Invocation Pattern&lt;/strong> represents the kind of models that invoke lambda functions periodically by using schedulers. Each function carries out a simple task and reports the execution results to notification channels.&lt;/p>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/02f5a2e9-9533-445d-829a-c1a7d700859a/Screenshot_from_2022-09-06_14-27-53.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;amp;X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220906%2Fus-west-2%2Fs3%2Faws4_request&amp;amp;X-Amz-Date=20220906T112230Z&amp;amp;X-Amz-Expires=86400&amp;amp;X-Amz-Signature=044ec7568fb7a8a9f2f283d272d2dd4acd85998bc0e780e707f9a237cbe85cb0&amp;amp;X-Amz-SignedHeaders=host&amp;amp;response-content-disposition=filename%20%3D%22Screenshot%2520from%25202022-09-06%252014-27-53.png%22&amp;amp;x-id=GetObject" alt="img1" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;p>&lt;strong>Event-Driven Pattern&lt;/strong> is where a set of lambda functions subscribe to events from cloud resources. These events trigger the execution of the subscribed lambda function passing the necessary context. It minimizes the cost by invoking lambda functions only when an event occurs and functions scale automatically based on the number of events, providing a scalable design.&lt;/p>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fabec05c-daa5-4473-9127-5138927928aa/Screenshot_from_2022-09-06_14-28-20.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;amp;X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220906%2Fus-west-2%2Fs3%2Faws4_request&amp;amp;X-Amz-Date=20220906T112316Z&amp;amp;X-Amz-Expires=86400&amp;amp;X-Amz-Signature=e27f03ead60903ecf5afd8b54a269458f073cdc48ffb2f97bd802e34c0fc6c27&amp;amp;X-Amz-SignedHeaders=host&amp;amp;response-content-disposition=filename%20%3D%22Screenshot%2520from%25202022-09-06%252014-28-20.png%22&amp;amp;x-id=GetObject" alt="img2" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;p>&lt;strong>Data Transformation Pattern.&lt;/strong> The ETL(extract-transform-load) data processing pipelines usually requires three steps: 1) extract data from a data source, 2) transform data by using frameworks such as Apache Spark or Flink, 3) load the transformed data into a database. Using lambda architecture, data processing tasks can be implemented as lambda functions.&lt;/p>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0f78fc8d-e13c-4097-8bf1-77332e538605/Screenshot_from_2022-09-06_14-28-04.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;amp;X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220906%2Fus-west-2%2Fs3%2Faws4_request&amp;amp;X-Amz-Date=20220906T112334Z&amp;amp;X-Amz-Expires=86400&amp;amp;X-Amz-Signature=fbbc6314227bd623be35efd53ca4733f7a071e6479e3b26382f501dfa013622f&amp;amp;X-Amz-SignedHeaders=host&amp;amp;response-content-disposition=filename%20%3D%22Screenshot%2520from%25202022-09-06%252014-28-04.png%22&amp;amp;x-id=GetObject" alt="img3" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;p>&lt;strong>Data Streaming Pattern.&lt;/strong> A lambda function sits in the path of the data stream and functions either as an aggregator or data partitioner. For example, a lambda can separate an incoming data stream into multiple streams(partition) or merge several incoming streams into one large data stream(aggregation).&lt;/p>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e4d287b2-b415-475b-b317-3ec3d679d784/Screenshot_from_2022-09-06_14-28-27.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;amp;X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220906%2Fus-west-2%2Fs3%2Faws4_request&amp;amp;X-Amz-Date=20220906T112424Z&amp;amp;X-Amz-Expires=86400&amp;amp;X-Amz-Signature=55bdc34986556eb7277dc48d88ae9a232c4ceeb24e560ab8dbf273987d00ad8b&amp;amp;X-Amz-SignedHeaders=host&amp;amp;response-content-disposition=filename%20%3D%22Screenshot%2520from%25202022-09-06%252014-28-27.png%22&amp;amp;x-id=GetObject" alt="img4" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;p>&lt;strong>State Machine Pattern&lt;/strong> enables building a complex, stateful procedure by coordinating a collection of discrete Lambda functions using a tool such as AWS Step Functions. It shouldn’t scale the entire pattern as tasks defined for each state can be scaled up/down individually, Furthermore, the state machine offers a try/catch mechanism so that different or the same functions can be invoked depending on the failure reason.&lt;/p>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/401e5618-bacf-485a-96fc-abaaf51434ae/Screenshot_from_2022-09-06_14-28-49.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;amp;X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220906%2Fus-west-2%2Fs3%2Faws4_request&amp;amp;X-Amz-Date=20220906T112600Z&amp;amp;X-Amz-Expires=86400&amp;amp;X-Amz-Signature=1d396cf33d4e529556f352fbb586328b98f7e8a7450ccae47770030866b85881&amp;amp;X-Amz-SignedHeaders=host&amp;amp;response-content-disposition=filename%20%3D%22Screenshot%2520from%25202022-09-06%252014-28-49.png%22&amp;amp;x-id=GetObject" alt="img5" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;p>&lt;strong>Bundled Pattern&lt;/strong> combines two or more of the previously described patterns together by easily passing events sequentially between them. It resembles UNIX pipelines, where each function is small, precise and does one thing, but true power comes from chaining these together.&lt;/p>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fc8aa752-ef51-453f-a570-3b4485f4b24c/Screenshot_from_2022-09-06_14-28-33.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;amp;X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220906%2Fus-west-2%2Fs3%2Faws4_request&amp;amp;X-Amz-Date=20220906T112614Z&amp;amp;X-Amz-Expires=86400&amp;amp;X-Amz-Signature=e27314a11b27d0a8f1eda160733388842ce62fece1595ef21542426424c095b0&amp;amp;X-Amz-SignedHeaders=host&amp;amp;response-content-disposition=filename%20%3D%22Screenshot%2520from%25202022-09-06%252014-28-33.png%22&amp;amp;x-id=GetObject" alt="img6" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;p>Authors show the time to start a lambda function(50-100ms) as a primary disadvantage. But lower prices for short running functions and better scalability are advantages.&lt;/p>
+&lt;p>In later sections of the paper they describe a threat intelligence platform built upon the above mentioned design patterns, which is not interesting for our purpose.&lt;/p>
+&lt;p>Authors also discuss some restrictions of current lambda design and offer possible solutions. Time bound execution is highlighted as one of the resource constraints and it can be avoided by splitting the original task across the multiple executions, but it is not possible for all workloads. They describe a proper solution as to either increase the execution time or to automatically pass state between executions so that the task can continue in another execution with the previous state. Lambda also suffers from lack of computing power. They argue that it would be better to have CPU limits configurable and support for GPUs in AWS Lambda. Moreover, lack of event tracing is emphasized by the authors.&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://www.usenix.org/conference/hotcloud18/presentation/hong" target="_blank" rel="noopener">Go Serverless: Securing Cloud via Serverless Design Patterns&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Kafka vs RabbitMQ</title><link>https://vjabrayilov.github.io/post/kafkavsrabbit/</link><pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/kafkavsrabbit/</guid><description>&lt;ul>
 &lt;li>&lt;a href="#rabbitmq">RabbitMQ&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#kafka">Kafka&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#rabbitmq-architecture">RabbitMQ Architecture&lt;/a>&lt;/li>
@@ -403,7 +453,7 @@ console.log('code block');
 &lt;p>Wowchemy supports the popular &lt;a href="https://plot.ly/" target="_blank" rel="noopener">Plotly&lt;/a> format for interactive charts.&lt;/p>
 &lt;p>Save your Plotly JSON in your page folder, for example &lt;code>line-chart.json&lt;/code>, and then add the &lt;code>{{&amp;lt; chart data=&amp;quot;line-chart&amp;quot; &amp;gt;}}&lt;/code> shortcode where you would like the chart to appear.&lt;/p>
 &lt;p>Demo:&lt;/p>
-&lt;div id="chart-586123497" class="chart">&lt;/div>
+&lt;div id="chart-894672135" class="chart">&lt;/div>
 &lt;script>
 (function() {
 let a = setInterval( function() {
@@ -412,7 +462,7 @@ return;
 }
 clearInterval( a );
 Plotly.d3.json("./line-chart.json", function(chart) {
-Plotly.plot('chart-586123497', chart.data, chart.layout, {responsive: true});
+Plotly.plot('chart-894672135', chart.data, chart.layout, {responsive: true});
 });
 }, 500 );
 })();

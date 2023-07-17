@@ -206,7 +206,7 @@ sections:
   #     # Choose a layout view
   #     view: compact
   #     columns: '2'
-  - block: portfolio
+  - block: collection
     id: projects
     content:
       title: Projects

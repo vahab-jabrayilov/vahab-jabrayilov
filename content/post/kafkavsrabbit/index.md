@@ -3,7 +3,8 @@ title: Kafka vs RabbitMQ
 date: 2022-07-18
 math: true
 featured: false
-authors: admin
+authors: 
+ - admin
 tags: 
  - rabbit-mq
  - kafka

@@ -20,7 +20,63 @@ Click the &lt;em>Cite&lt;/em> button above to demo the feature to enable visitor
 Create your slides in Markdown - click the &lt;em>Slides&lt;/em> button to check out the example.
 &lt;/div>
 &lt;/div>
-Supplementary notes can be added here, including [code, math, and images](https://wowchemy.com/docs/writing-markdown-latex/). --></description></item><item><title>Go Serverless: Securing Cloud via Serverless Design Patterns</title><link>https://vjabrayilov.github.io/post/serverlessdesignpatterns/</link><pubDate>Tue, 06 Sep 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/serverlessdesignpatterns/</guid><description>&lt;h2 id="review">Review&lt;/h2>
+Supplementary notes can be added here, including [code, math, and images](https://wowchemy.com/docs/writing-markdown-latex/). --></description></item><item><title>GSoC Final Submission Thanos</title><link>https://vjabrayilov.github.io/post/gsoc/</link><pubDate>Thu, 08 Sep 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/gsoc/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>The main goal was to support on the fly compaction of TSDB blocks without using any disk space or constant amount of the disk space. As analyzing, I came across with the following challenges:&lt;/p>
+&lt;ul>
+&lt;li>TSDB blocks have a special structure and the main challenge stems from already big size of a single block.&lt;/li>
+&lt;li>&lt;code>compactor&lt;/code> module is written such that it operates on the already downloaded blocks, so nothing to be done here.&lt;/li>
+&lt;li>Initially, I had proposed to have a partial upload and download to accomodate a single download and upload problem, but I identified that downloading dependency (&lt;code>minio&lt;/code>) already employs it.&lt;/li>
+&lt;/ul>
+&lt;h2 id="analysis">Analysis&lt;/h2>
+&lt;p>I moved to analyze the whole codebase, and with the help of my supervisor we identified &lt;code>BucketReader&lt;/code> interface which is responsible for read access to an object storage bucket and all the other cloud provider support modules are implementing it. My supervisor suggested to imlement a new and scratch version of it which uses a streaming behavior. To be precise, it should bring chunks based on the read index and compact on chunk basis. Howevere, it is not a trivial thing and requires an in depth analysis of TSDB block structure and needs a planning mechanism wo bring which chunks and when to stop bringing. Since, the system is widely used in production, it should be well tested and shouldn;t result in data loss, hence increasing the complexity. So, we decided to take time to in depth analyze the above mentioned problems and come up with a strategy,&lt;/p>
+&lt;p>&lt;code>BucketReader&lt;/code> consists of &lt;code>Iter&lt;/code>, &lt;code>Get&lt;/code>, &lt;code>GetRange&lt;/code>, &lt;code>Exists&lt;/code> &lt;code>IsObjNotFoundErr&lt;/code> and &lt;code>Attributes&lt;/code> functions. In more detail,&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>Iter&lt;/code> calls a given function in the bucket directory passing the entries to the function.&lt;/li>
+&lt;li>&lt;code>Get&lt;/code> provides a reader for the object&lt;/li>
+&lt;li>&lt;code>GetRange&lt;/code> provides a range reader similar to &lt;code>Get&lt;/code>&lt;/li>
+&lt;li>&lt;code>Exists&lt;/code> checks whether the object exists in the bucket or not&lt;/li>
+&lt;li>&lt;code>IsObjNotFoundErr&lt;/code> returns true if object is not found in the bucket&lt;/li>
+&lt;li>&lt;code>Attributes&lt;/code> gives information about the specified object&lt;/li>
+&lt;/ul>
+&lt;p>TSDB blocks consists of the head block and following N blocks. Each incoming time-series data point comes to the Head block and stays there, when all of them get old enough they are persisted in the disk as a separate block. WAL and mmap coordinates this process, but only the head and 1&amp;hellip;N blocks are interested in case of compaction, since onlythey are resided in the object storage.&lt;/p>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="./tsdb.png" alt="tsdb-block" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;p>Every block has a unique identifier, called a &lt;code>Universally Unique Lexicographically Sortable Identifier(ULID)&lt;/code>. A block has 4 constituent parts:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>meta.json&lt;/code> &amp;ndash;&amp;gt; the medatadata about the block&lt;/li>
+&lt;li>&lt;code>chunks&lt;/code> &amp;ndash;&amp;gt; raw chunks&lt;/li>
+&lt;li>&lt;code>index&lt;/code> &amp;ndash;&amp;gt; index of the block&lt;/li>
+&lt;li>&lt;code>tombstones&lt;/code> &amp;ndash;&amp;gt; marker holding info whether the samples are deleted or not&lt;/li>
+&lt;/ul>
+&lt;p>Only chunks is directory, other three are regular files.&lt;/p>
+&lt;p>&lt;code>meta.json&lt;/code> has the following structure:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-js" data-lang="js">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;ulid&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;01EM6Q6A1YPX4G9TEB20J22B2R&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;minTime&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">1602237600000&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;maxTime&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">1602244800000&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;stats&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;numSamples&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">553673232&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;numSeries&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">1346066&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;numChunks&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">4440437&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;compaction&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;level&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;sources&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;01EM65SHSX4VARXBBHBF0M0FDS&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;01EM6GAJSYWSQQRDY782EA5ZPN&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;version&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>chunks&lt;/code> directory has numbered files each representing a separate chunk and has a size of &lt;code>512 MiB&lt;/code>.&lt;/p>
+&lt;p>Planning phase of the compaction decides which blocks to compact. In our case, we should read the relevant block metadata and do planning based upon them. Since, metadata files are small in size reading several of them will not incur that much cost. With the new modified planning phase, we can decid upon which blocks are of interest for the current compaction stage and stream the chunks of those blocks in parallel. Reading those streams, one can compact and create new chunks in memory(it may also be mmap-ed file in disk). When the newly created chunks of the block reach some size it can be uploaded to object storage.&lt;/p>
+&lt;p>Unfortunately, regarding time constraints and implementation complextiy, the result of above analysis is not completely ready. I plan to incremenetally implement by learning best practices. By analyizng the &lt;code>Thanos&lt;/code> code base I get the good grasp of best practices of &lt;code>Go&lt;/code> programming language and learned lots of unknown features to me. I believe those will help me to implement the result of analysis.&lt;/p>
+&lt;h2 id="acknowledgements">Acknowledgements&lt;/h2>
+&lt;p>To sum up, GSoC was a good experience to learn, develop and be a part of larger open source community. Despite the fact that project was challenging, I learned a lot about time series databases, cloud object storage, and &lt;code>Go&lt;/code> programming language. I would like to especially thank &lt;code>Ben Ye&lt;/code> for his constant support and inspiration, and all &lt;code>Thanos&lt;/code> community. Moreover, I would like to express my gratitude to all the folks in &lt;code>Google&lt;/code> making the &lt;code>Google Summer of Code&lt;/code> and inspiring newbies in the open source.&lt;/p></description></item><item><title>Go Serverless: Securing Cloud via Serverless Design Patterns</title><link>https://vjabrayilov.github.io/post/serverlessdesignpatterns/</link><pubDate>Tue, 06 Sep 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/serverlessdesignpatterns/</guid><description>&lt;h2 id="review">Review&lt;/h2>
 &lt;p>Authors have a security background and paper aims at utilizing serverless design patterns in security applications. They solely focus on AWS Lambda, and assume that all the responsibility to secure lambda execution lies on the cloud provider. However, customers are also responsible to secure their communication. They briefly describe six design patterns and how one can use them to develop a security oriented application.&lt;/p>
 &lt;p>&lt;strong>Periodic Invocation Pattern&lt;/strong> represents the kind of models that invoke lambda functions periodically by using schedulers. Each function carries out a simple task and reports the execution results to notification channels.&lt;/p>
 &lt;p>
@@ -544,7 +600,7 @@ console.log('code block');
 &lt;p>Wowchemy supports the popular &lt;a href="https://plot.ly/" target="_blank" rel="noopener">Plotly&lt;/a> format for interactive charts.&lt;/p>
 &lt;p>Save your Plotly JSON in your page folder, for example &lt;code>line-chart.json&lt;/code>, and then add the &lt;code>{{&amp;lt; chart data=&amp;quot;line-chart&amp;quot; &amp;gt;}}&lt;/code> shortcode where you would like the chart to appear.&lt;/p>
 &lt;p>Demo:&lt;/p>
-&lt;div id="chart-249138756" class="chart">&lt;/div>
+&lt;div id="chart-526817439" class="chart">&lt;/div>
 &lt;script>
 (function() {
 let a = setInterval( function() {
@@ -553,7 +609,7 @@ return;
 }
 clearInterval( a );
 Plotly.d3.json("./line-chart.json", function(chart) {
-Plotly.plot('chart-249138756', chart.data, chart.layout, {responsive: true});
+Plotly.plot('chart-526817439', chart.data, chart.layout, {responsive: true});
 });
 }, 500 );
 })();

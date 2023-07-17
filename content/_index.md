@@ -88,7 +88,7 @@ sections:
           date_start: '2022-05-01'
           date_end: '2022-09-01'
           description: |2-
-              - Contributed to [Thanos](https://thanos.io/) project under the [Cloud Native Computing Foundation](cncf.io).
+              - Contributed to [Thanos](https://thanos.io/) project under the [Cloud Native Computing Foundation](https://cncf.io).
               - Optimized compaction/downsampling algorithm of the existing system to run on the fly without using disk
               - Wrote unit and integration tests
               - Devised and implemented a new block reader/writer interface and documented the process.
@@ -104,7 +104,7 @@ sections:
               - Implemented a high performance key value store with MultiPaxos consensus algorithm in Go, Java, C++ and Rust. 
         - title: Student Researcher
           company: Middle East Technical University
-          company_url: 'metu.edu.tr'
+          company_url: 'https://metu.edu.tr'
           company_logo: metu
           location: Ankara, Turkey
           date_start: '2022-01-01'
@@ -114,7 +114,7 @@ sections:
               - Deploy a Kubernetes cluster with vulnerable Docker application images. Simulated attacks and collected ML training data. 
         - title: Software Development Engineer
           company: KibritTech
-          company_url: 'kibrit.tech'
+          company_url: 'https://kibrit.tech'
           company_logo: kibrit
           location: Baku, Azerbaijan
           date_start: '2021-02-01'

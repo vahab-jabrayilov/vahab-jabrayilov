@@ -234,25 +234,6 @@ sections:
       view: compact
       # For Showcase view, flip alternate rows?
       # flip_alt_rows: false
-  # - block: markdown
-  #   content:
-  #     title: Gallery
-  #     subtitle: ''
-  #     text: |-
-  #       {{< gallery album="demo" >}}
-  #   design:
-  #     columns: '1'
-  # - block: collection
-  #   id: featured
-  #   content:
-  #     title: Featured Publications
-  #     filters:
-  #       folders:
-  #         - publication
-  #       featured_only: true
-  #   design:
-  #     columns: '2'git ad
-  #     view: card
   - block: collection
     id: publications
     content:
@@ -268,6 +249,26 @@ sections:
     design:
       columns: '2'
       view: citation
+  - block: markdown
+    id: service
+    content:
+      title: Service
+      subtitle: ''
+      text: |-
+         - Student Volunteer at [PLDI'22](https://pldi22.sigplan.org/) 
+    design:
+      columns: '1'
+  # - block: collection
+  #   id: featured
+  #   content:
+  #     title: Featured Publications
+  #     filters:
+  #       folders:
+  #         - publication
+  #       featured_only: true
+  #   design:
+  #     columns: '2'git ad
+  #     view: card
   # - block: collection
   #   id: talks
   #   content:

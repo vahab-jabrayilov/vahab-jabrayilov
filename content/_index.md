@@ -73,13 +73,13 @@ sections:
           company: EPFL
           company_url: 'https://www.epfl.ch/en/'
           company_logo: epfl
-          location: Lausanne. Switzerland
+          location: Lausanne, Switzerland
           date_start: '2023-06-19'
           date_end: '2023-08-19'
           description: |2-
-              Worked on "Detecting Metastable Failures in Distributed Systems" as a part of [RS3LAB](https://rs3lab.github.io/) under the spervision of [Sanidhya Kashyap](https://sanidhya.github.io/).
-              Developed benchmarks for exhibiting metastability.
-              Modeleted distributed systems as Petri Net models.
+              - Worked on "Detecting Metastable Failures in Distributed Systems" as a part of [RS3LAB](https://rs3lab.github.io/) under the spervision of [Sanidhya Kashyap](https://sanidhya.github.io/).
+              - Developed benchmarks for exhibiting metastability.
+              - Modeleted distributed systems as Petri Net models.
         - title: Software Development Engineer Intern
           company: Google, Summer of Code
           company_url: 'https://summerofcode.withgoogle.com/'
@@ -88,10 +88,10 @@ sections:
           date_start: '2022-05-01'
           date_end: '2020-09-01'
           description: |2-
-              Contributed to `Thanos` project under the Cloud Native Computing Foundation(CNCF).
-              Optimized compaction/downsampling algorithm of the existing system to run on the fly without using disk
-              Wrote unit and integration tests
-              Devised and implemented a new block reader/writer interface and documented the process.
+              - Contributed to `Thanos` project under the Cloud Native Computing Foundation(CNCF).
+              - Optimized compaction/downsampling algorithm of the existing system to run on the fly without using disk
+              - Wrote unit and integration tests
+              - Devised and implemented a new block reader/writer interface and documented the process.
         # - title: Student Researcher
         #   co 
     design:

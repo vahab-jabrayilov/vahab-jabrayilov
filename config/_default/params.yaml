@@ -6,8 +6,8 @@
 # Appearance
 
 appearance:
-  theme_day: ocean
-  theme_night: ocean
+  theme_day: apogee
+  theme_night: apogee
   font: minimal
   font_size: L
 

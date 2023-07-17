@@ -76,5 +76,9 @@ last_name: Jabrayilov
 email: vahab.jabrayilov@epfl.ch
 ---
 
-TODO: About
+I am a first-year Ph.D. student in Computer Science at [Columbia University](columbia.edu) advised by [Kostis Kaffes](https://stanford.edu/~kkaffes/).
+I am broadly interested in computer systems, especially cloud computing. I am looking for ways to implement and deploy systems for microsecond-scale tail latency across different layers of the stack.
+
+I received my bachelor's degree at [Middle East Technical University](metu.edu.tr). 
+You can reach me at ``` vj2267 [at] columbia [dot] edu```.
 {style="text-align: justify;"}

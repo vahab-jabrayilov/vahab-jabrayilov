@@ -65,7 +65,7 @@ education:
       institution: Columbia University
     - course: BSc in Computer Engineering
       institution: Middle East Technical University
-      year: 2023
+      # year: 2023
 
 superuser: true
 status:

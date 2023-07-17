@@ -210,6 +210,7 @@ sections:
     id: projects
     content:
       title: Projects
+      id: projects
       filters:
         folders:
           - project

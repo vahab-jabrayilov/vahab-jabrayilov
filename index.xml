@@ -205,6 +205,79 @@ fanout exchange
 &lt;h2 id="references">References&lt;/h2>
 &lt;ul>
 &lt;li>&lt;a href="https://hackingdistributed.com/2017/05/04/stages-of-enlightenment/" target="_blank" rel="noopener">https://hackingdistributed.com/2017/05/04/stages-of-enlightenment/&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Metastable Failures in Distributed Systems</title><link>https://vjabrayilov.github.io/post/metastablefailures/</link><pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/metastablefailures/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;ul>
+&lt;li>Interestingly, most features improving the efficiency or reliability are the main cause of &lt;em>metastable failures&lt;/em>.&lt;/li>
+&lt;li>Trigger causes the open system (with an unctrolled source of load) to enter a &lt;strong>bad state&lt;/strong> persisting even after the removal of the trigger.&lt;/li>
+&lt;li>Failures that are &lt;strong>resolved when the trigger is removed&lt;/strong> are not metastable.&lt;/li>
+&lt;li>Recovery requires &lt;em>a strong corrective push&lt;/em>, e.g. rebooting or dramatically reducing the load.&lt;/li>
+&lt;li>Lifecycle of a metastable failure:
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> load rises trigger
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> stable state ------------&amp;gt; vulnerable state --------&amp;gt; metastable state
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> (still healthy)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>the vulnerable state is not an overloaded state; system can run for a long time here; but can get stuck in &lt;em>metastable state&lt;/em> w/o any increase in the load.&lt;/li>
+&lt;li>interestingly most production systems prefers the vulnerable state since it has higher efficiency than the stable state.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;em>Feedback loop&lt;/em> sustains the failure until a corrective action is applied.&lt;/li>
+&lt;/ul>
+&lt;h2 id="case-studies">Case studies&lt;/h2>
+&lt;ul>
+&lt;li>Request Retries
+&lt;ul>
+&lt;li>Results in work amplification&lt;/li>
+&lt;li>Consider a web application with db. Initially, system operates normally while load is just below a certain threshold. After a temporary network outage occurs and restores, retries are sent and this surge overloads the db. Overloaded db timeouts the upcoming queries and system will remain in metastable state untill the load is significantly reduced or timeout(retry) policy of db query changed.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Look-aside Cache
+&lt;ul>
+&lt;li>If cache is lost in the vulnerable state, db will be pushed to overloaded state. Cache will remain empty, system is trapped in metastable failure state;
+&lt;ul>
+&lt;li>low cache hit -&amp;gt; slow db response -&amp;gt; prevents filling the cache&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Slow Error Handling
+&lt;ul>
+&lt;li>Error handling has its cost and it can be a significant cost&lt;/li>
+&lt;li>Trigger causes the system to run out of the resources used by error handling code, and error handling will make the shortage more severe.&lt;/li>
+&lt;li>&lt;strong>??? &amp;ndash; to think&lt;/strong> Is the following considered? &amp;ndash;&amp;gt; An error occurs(like wrong input), error handling code makes the resources to run out, normal operations are deprived of resources resulting in additional errors(exceptions), which draw the system to a metastable state.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Link Imbalance
+&lt;ul>
+&lt;li>a very interesting and solid example; both requiring network and application layer collaboration to fix&lt;/li>
+&lt;li>a complex and well designed hashing algorithm routes the requests; but the cache miss of a single shard in the application level increases the requests to the db. There is a connection pool with MRU policy, each spike of misses reaarranges the connection pool so that highest latency links are at the top and they will be used; resulting in further congestion.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="approaches-to-handling-metastability">Approaches to Handling Metastability&lt;/h2>
+&lt;ul>
+&lt;li>Trigger vs Root Cause: Sustaining feedback loop is the root cause rather than the trigger itself. Different triggers can result in the same failure state; hence solution is to address the sustaining effect.&lt;/li>
+&lt;li>Change of Policy during Overload: e.g., make some failing requests to succeed.&lt;/li>
+&lt;li>Prioritization: e.g., give priority to retries requests rather than new ones.&lt;/li>
+&lt;li>Stress tests &lt;strong>TODO: read the Kraken paper&lt;/strong>&lt;/li>
+&lt;li>Organizational incentives&lt;/li>
+&lt;li>Fast Error Paths&lt;/li>
+&lt;li>Outlier Hygiene: same root cause can manfiest earlier as latency outlier or a cluster of errrors.&lt;/li>
+&lt;li>Autoscaling&lt;/li>
+&lt;/ul>
+&lt;h2 id="research-directions">Research Directions&lt;/h2>
+&lt;ul>
+&lt;li>2 main goals:
+&lt;ul>
+&lt;li>designing systems that avoid metastable failures while operating efficiently&lt;/li>
+&lt;li>developing mechanisms to recover from metastable failures as quickly as possible in cases that cannot be avoided&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Try to weaken the strongest feedback loops, discover about characteristic metric, using them generate warning signs;&lt;/li>
+&lt;li>Learning the hidden capacity of the underlying system can help to take preventive actions.&lt;/li>
+&lt;/ul>
+&lt;h2 id="references">References&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://sigops.org/s/conferences/hotos/2021/papers/hotos21-s11-bronson.pdf" target="_blank" rel="noopener">https://sigops.org/s/conferences/hotos/2021/papers/hotos21-s11-bronson.pdf&lt;/a>&lt;/li>
 &lt;/ul></description></item><item><title>Welcome to Wowchemy, the website builder for Hugo</title><link>https://vjabrayilov.github.io/post/getting-started/</link><pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/getting-started/</guid><description>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">libr&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;hello&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="overview">Overview&lt;/h2>
@@ -352,7 +425,7 @@ console.log('code block');
 &lt;p>Wowchemy supports the popular &lt;a href="https://plot.ly/" target="_blank" rel="noopener">Plotly&lt;/a> format for interactive charts.&lt;/p>
 &lt;p>Save your Plotly JSON in your page folder, for example &lt;code>line-chart.json&lt;/code>, and then add the &lt;code>{{&amp;lt; chart data=&amp;quot;line-chart&amp;quot; &amp;gt;}}&lt;/code> shortcode where you would like the chart to appear.&lt;/p>
 &lt;p>Demo:&lt;/p>
-&lt;div id="chart-964853217" class="chart">&lt;/div>
+&lt;div id="chart-586123497" class="chart">&lt;/div>
 &lt;script>
 (function() {
 let a = setInterval( function() {
@@ -361,7 +434,7 @@ return;
 }
 clearInterval( a );
 Plotly.d3.json("./line-chart.json", function(chart) {
-Plotly.plot('chart-964853217', chart.data, chart.layout, {responsive: true});
+Plotly.plot('chart-586123497', chart.data, chart.layout, {responsive: true});
 });
 }, 500 );
 })();

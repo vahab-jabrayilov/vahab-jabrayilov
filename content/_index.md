@@ -98,10 +98,11 @@ sections:
           company_logo: psu
           location: Remote, University Park, PA, USA
           date_start: '2021-10-01'
-          end_date: '2022-05-01'
+          date_end: '2022-05-01'
           description: |2-
                 - Worked under supervision of [Abutalib Aghayev](https://agayev.github.io/).
-                - Implemented a key value store with MultiPaxos consensus algorithm in Go, Java, C++ and Rust and made a performance analysis from various aspects. 
+                - Implemented a key value store with MultiPaxos consensus algorithm in Go, Java, C++ and Rust,
+                  and made a performance analysis from various aspects. 
                 
                 
     design:

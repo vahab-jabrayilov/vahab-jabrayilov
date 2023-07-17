@@ -74,8 +74,8 @@ sections:
           company_url: 'https://www.epfl.ch/en/'
           company_logo: org-x
           location: Lausanne. Switzerland
-          date_start: '2023-19-06'
-          date_end: '2023-19-08'
+          date_start: '2023-06-19'
+          date_end: '2023-08-19'
           description: |2-
               Responsibilities include:
 
@@ -202,7 +202,7 @@ sections:
           - publication
         featured_only: true
     design:
-      columns: '2'
+      columns: '2'git ad
       view: card
   - block: collection
     content:

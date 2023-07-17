@@ -1,5 +1,6 @@
 ---
 title: Kafka vs RabbitMQ
+summary: Architectural review of Kafka and RabbitMQ
 date: 2022-07-18
 math: true
 featured: false

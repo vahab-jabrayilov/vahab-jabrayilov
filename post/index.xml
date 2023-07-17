@@ -1,4 +1,163 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts | Vahab Jabrayilov</title><link>https://vjabrayilov.github.io/post/</link><atom:link href="https://vjabrayilov.github.io/post/index.xml" rel="self" type="application/rss+xml"/><description>Posts</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 13 Dec 2020 00:00:00 +0000</lastBuildDate><image><url>https://vjabrayilov.github.io/media/icon_hufdc9ffe2c12a5bb5ad2cfdfce17ddfaa_56068_512x512_fill_lanczos_center_3.png</url><title>Posts</title><link>https://vjabrayilov.github.io/post/</link></image><item><title>Welcome to Wowchemy, the website builder for Hugo</title><link>https://vjabrayilov.github.io/post/getting-started/</link><pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/getting-started/</guid><description>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">libr&lt;/span>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts | Vahab Jabrayilov</title><link>https://vjabrayilov.github.io/post/</link><atom:link href="https://vjabrayilov.github.io/post/index.xml" rel="self" type="application/rss+xml"/><description>Posts</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 18 Jul 2022 00:00:00 +0000</lastBuildDate><image><url>https://vjabrayilov.github.io/media/icon_hufdc9ffe2c12a5bb5ad2cfdfce17ddfaa_56068_512x512_fill_lanczos_center_3.png</url><title>Posts</title><link>https://vjabrayilov.github.io/post/</link></image><item><title>Kafka vs RabbitMQ</title><link>https://vjabrayilov.github.io/post/kafkavsrabbit/</link><pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/kafkavsrabbit/</guid><description>&lt;ul>
+&lt;li>&lt;a href="#rabbitmq">RabbitMQ&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#kafka">Kafka&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#rabbitmq-architecture">RabbitMQ Architecture&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#kafka-architecture">Kafka Architecture&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#use-cases">Use cases&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#references">References&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="rabbitmq">RabbitMQ&lt;/h2>
+&lt;ul>
+&lt;li>supports :
+&lt;ul>
+&lt;li>AMQP : Advanced Message Queuing Protocol&lt;/li>
+&lt;li>MQTT : MQ Telemetry Protocol&lt;/li>
+&lt;li>STOMP : Streaming Text Oriented Messaging Protocol&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>is known as a &lt;em>hybrid&lt;/em> broker&lt;/li>
+&lt;li>uses &lt;em>smart broker/dumb consumer&lt;/em> model&lt;/li>
+&lt;/ul>
+&lt;h2 id="kafka">Kafka&lt;/h2>
+&lt;ul>
+&lt;li>provides higher throughput, &lt;em>built-in partitioning, replication, and inherent fault-tolerance&lt;/em>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>There are 2 &lt;em>async&lt;/em> messagin patterns :&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Message Queue&lt;/p>
+&lt;ul>
+&lt;li>a creating app sends a msg to queue. When the consuming app is ready, it just connects to the queue and retrieves the msg, removing it from the queue.&lt;/li>
+&lt;li>several consuming apps can exist, &lt;strong>each message is only consumed by one&lt;/strong>.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>Publish/Subscribe (pub/sub)&lt;/p>
+&lt;ul>
+&lt;li>allows producers to publish msg&amp;rsquo;s which can be consumed by multiple consumer.&lt;/li>
+&lt;li>if consuming apps are interested, they just subscribe to a channel&lt;/li>
+&lt;li>used when a msg or event must trigger several actions&lt;/li>
+&lt;li>unlike the message queue, pub/sub &lt;em>assures&lt;/em> that consuming apps rcv msg&amp;rsquo;s in the &lt;em>same order&lt;/em> as messaging system received them.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="rabbitmq-architecture">RabbitMQ Architecture&lt;/h2>
+&lt;ul>
+&lt;li>consists of
+&lt;ul>
+&lt;li>producers&lt;/li>
+&lt;li>exchanges&lt;/li>
+&lt;li>queues&lt;/li>
+&lt;li>consumers&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> queues
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> msg |----&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> producer -----&amp;gt; exchange --|----&amp;gt; consumers
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> |----&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> or other
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> exchanges
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>&lt;em>queue&lt;/em> is a sequential data structure:
+&lt;ul>
+&lt;li>producers add to the end&lt;/li>
+&lt;li>consumers get data from the top&lt;/li>
+&lt;li>FIFO&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;em>msg exchange&lt;/em> determines routing
+&lt;ul>
+&lt;li>4 exchange types:
+&lt;ul>
+&lt;li>direct
+&lt;ul>
+&lt;li>can directly target msg&amp;rsquo;s to a particular queue
+&lt;figure id="figure-direct-exchange">
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://miro.medium.com/max/1400/1*_Jzl2o13xBPn3CsdATBaxw.png" alt="direct exchange" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;figcaption>
+direct exchange
+&lt;/figcaption>&lt;/figure>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>fanout
+&lt;ul>
+&lt;li>route msg&amp;rsquo;s to all available queues
+&lt;figure id="figure-fanout-exchange">
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://miro.medium.com/max/1400/1*Hn3SaZuE1o3C1-IayaU9AQ.png" alt="fanout exchange" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;figcaption>
+fanout exchange
+&lt;/figcaption>&lt;/figure>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>topic&lt;/li>
+&lt;li>header&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="kafka-architecture">Kafka Architecture&lt;/h2>
+&lt;ul>
+&lt;li>consists of
+&lt;ul>
+&lt;li>producers&lt;/li>
+&lt;li>consumers&lt;/li>
+&lt;li>clusters&lt;/li>
+&lt;li>brokers&lt;/li>
+&lt;li>topics&lt;/li>
+&lt;li>partitions&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">producer --------&amp;gt; cluster -------&amp;gt; consumer
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://miro.medium.com/max/1376/1*TIKFG4HHYx4W6RbE1BWblA.png" alt="kafka architecture" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;hr>
+&lt;h2 id="use-cases">Use cases&lt;/h2>
+&lt;ul>
+&lt;li>Rabbit MQ
+&lt;ul>
+&lt;li>complex routing - route msg&amp;rsquo;s among miltiple consuming apps, such as in a microservice architecture&lt;/li>
+&lt;li>legacy applications&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://miro.medium.com/max/1400/1*Kyps08v9VSh5QwETNOVuHw.png" alt="rabbit use cases" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;ul>
+&lt;li>Kafka
+&lt;ul>
+&lt;li>high-troughput activity tracking&lt;/li>
+&lt;li>stream processing&lt;/li>
+&lt;li>event sourcing&lt;/li>
+&lt;li>log aggregation
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://miro.medium.com/max/1400/1*001aX2FBDS4qz8nPLNiXAg.png" alt="kafka use cases" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>&lt;a href="https://medium.com/@mbhanuka/kafka-vs-rabitmq-3ae75abe9c80" target="_blank" rel="noopener">https://medium.com/@mbhanuka/kafka-vs-rabitmq-3ae75abe9c80&lt;/a>&lt;/p></description></item><item><title>Welcome to Wowchemy, the website builder for Hugo</title><link>https://vjabrayilov.github.io/post/getting-started/</link><pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/getting-started/</guid><description>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">libr&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;hello&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;ol>
@@ -145,7 +304,7 @@ console.log('code block');
 &lt;p>Wowchemy supports the popular &lt;a href="https://plot.ly/" target="_blank" rel="noopener">Plotly&lt;/a> format for interactive charts.&lt;/p>
 &lt;p>Save your Plotly JSON in your page folder, for example &lt;code>line-chart.json&lt;/code>, and then add the &lt;code>{{&amp;lt; chart data=&amp;quot;line-chart&amp;quot; &amp;gt;}}&lt;/code> shortcode where you would like the chart to appear.&lt;/p>
 &lt;p>Demo:&lt;/p>
-&lt;div id="chart-258173964" class="chart">&lt;/div>
+&lt;div id="chart-582619374" class="chart">&lt;/div>
 &lt;script>
 (function() {
 let a = setInterval( function() {
@@ -154,7 +313,7 @@ return;
 }
 clearInterval( a );
 Plotly.d3.json("./line-chart.json", function(chart) {
-Plotly.plot('chart-258173964', chart.data, chart.layout, {responsive: true});
+Plotly.plot('chart-582619374', chart.data, chart.layout, {responsive: true});
 });
 }, 500 );
 })();

@@ -6,9 +6,9 @@
 # Appearance
 
 appearance:
-  theme_day: futuristic
-  theme_night: futuristic
-  font: futuristic
+  theme_day: Mr Robot
+  theme_night: Mr Robot
+  font: minimal
   font_size: L
 
 # SEO

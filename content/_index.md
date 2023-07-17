@@ -123,8 +123,20 @@ sections:
               - Reduced response time of real-time monitoring service for call center management solution implementing caching layer.
               - Integrated several third party chat applications to the solution.
               - Acted on-call engineer to solve production problems.
-                
-                
+        - title: Student Teaching Assistant
+          company: Middle East Technical Univesity
+          date_url: 'https://metu.edu.tr'
+          company_logo: metu
+          date_start: '2021-03-01'
+          date_end: '2021-07-01'
+          description: Conducted lab sessions and office hours for 100+ students at `CENG240-Pythin Programming for Engineers`.
+        - title: Student Researcher
+          company: eiLink
+          company_url: 'https://eilink.az/home'
+          company_logo: eilink
+          date_start: '2019-02-01' 
+          date_end: '2019-08-01'
+          description: Preprocessed Distributed Acoustic Sensing(DAS) data, made statistical analysis and visualizations.             
     design:
       columns: '2'
   # - block: accomplishments

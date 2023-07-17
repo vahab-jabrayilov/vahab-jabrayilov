@@ -76,12 +76,12 @@ sections:
           location: Lausanne. Switzerland
           date_start: '2023-19-06'
           date_end: '2023-19-08'
-          # description: |2-
-          #     Responsibilities include:
+          description: |2-
+              Responsibilities include:
 
-          #     * Analysing
-          #     * Modelling
-          #     * Deploying
+              * Analysing
+              * Modelling
+              * Deploying
         - title: Professor of Semiconductor Physics
           company: University X
           company_url: ''

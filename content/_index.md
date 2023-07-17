@@ -101,8 +101,7 @@ sections:
           date_end: '2022-05-01'
           description: |2-
                 - Worked under supervision of [Abutalib Aghayev](https://agayev.github.io/).
-                - Implemented a key value store with MultiPaxos consensus algorithm in Go, Java, C++ and Rust,
-                  and made a performance analysis from various aspects. 
+                - Implemented a high performance key value store with MultiPaxos consensus algorithm in Go, Java, C++ and Rust. 
                 
                 
     design:

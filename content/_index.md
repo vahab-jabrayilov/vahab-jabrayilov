@@ -77,19 +77,23 @@ sections:
           date_start: '2023-06-19'
           date_end: '2023-08-19'
           description: |2-
-              Responsibilities include:
-
-              * Analysing
-              * Modelling
-              * Deploying
-        - title: Professor of Semiconductor Physics
-          company: University X
-          company_url: ''
-          company_logo: org-x
-          location: California
-          date_start: '2016-01-01'
-          date_end: '2020-12-31'
-          description: Taught electronic engineering and researched semiconductor physics.
+              Worked on "Detecting Metastable Failures in Distributed Systems" as a part of [RS3LAB](https://rs3lab.github.io/) under the spervision of [Sanidhya Kashyap](https://sanidhya.github.io/).
+              Developed benchmarks for exhibiting metastability.
+              Modeleted distributed systems as Petri Net models.
+        - title: Software Development Engineer Intern
+          company: Google, Summer of Code
+          company_url: 'https://summerofcode.withgoogle.com/'
+          company_logo: GSoC_logo
+          location: Remote, Mountain View, CA, USA
+          date_start: '2022-05-01'
+          date_end: '2020-09-01'
+          description: |2-
+              Contributed to `Thanos` project under the Cloud Native Computing Foundation(CNCF).
+              Optimized compaction/downsampling algorithm of the existing system to run on the fly without using disk
+              Wrote unit and integration tests
+              Devised and implemented a new block reader/writer interface and documented the process.
+        # - title: Student Researcher
+        #   co 
     design:
       columns: '2'
   # - block: accomplishments

@@ -92,8 +92,18 @@ sections:
               - Optimized compaction/downsampling algorithm of the existing system to run on the fly without using disk
               - Wrote unit and integration tests
               - Devised and implemented a new block reader/writer interface and documented the process.
-        # - title: Student Researcher
-        #   co 
+        - title: Student Researcher
+          company: Penn State University
+          company_url: 'psu.edu'
+          company_logo: psu
+          location: Remote, University Park, PA, USA
+          date_start: '2021-10-01'
+          end_date: '2022-05-01'
+          description: |2-
+                - Worked under supervision of [Abutalib Aghayev](https://agayev.github.io/).
+                - Implemented a key value store with MultiPaxos consensus algorithm in Go, Java, C++ and Rust and made a performance analysis from various aspects. 
+                
+                
     design:
       columns: '2'
   # - block: accomplishments

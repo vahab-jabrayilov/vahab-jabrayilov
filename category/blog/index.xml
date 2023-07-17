@@ -1,4 +1,73 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>blog | Vahab Jabrayilov</title><link>https://vjabrayilov.github.io/category/blog/</link><atom:link href="https://vjabrayilov.github.io/category/blog/index.xml" rel="self" type="application/rss+xml"/><description>blog</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 18 Jul 2022 00:00:00 +0000</lastBuildDate><image><url>https://vjabrayilov.github.io/media/icon_hufdc9ffe2c12a5bb5ad2cfdfce17ddfaa_56068_512x512_fill_lanczos_center_3.png</url><title>blog</title><link>https://vjabrayilov.github.io/category/blog/</link></image><item><title>Kafka vs RabbitMQ</title><link>https://vjabrayilov.github.io/post/kafkavsrabbit/</link><pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/kafkavsrabbit/</guid><description>&lt;ul>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>blog | Vahab Jabrayilov</title><link>https://vjabrayilov.github.io/category/blog/</link><atom:link href="https://vjabrayilov.github.io/category/blog/index.xml" rel="self" type="application/rss+xml"/><description>blog</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 19 Jul 2022 00:00:00 +0000</lastBuildDate><image><url>https://vjabrayilov.github.io/media/icon_hufdc9ffe2c12a5bb5ad2cfdfce17ddfaa_56068_512x512_fill_lanczos_center_3.png</url><title>blog</title><link>https://vjabrayilov.github.io/category/blog/</link></image><item><title>How to Read a Paper</title><link>https://vjabrayilov.github.io/post/howtoreadapaper/</link><pubDate>Tue, 19 Jul 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/howtoreadapaper/</guid><description>&lt;ul>
+&lt;li>&lt;strong>Key idea:&lt;/strong> read the paper in up to &lt;em>3 passes&lt;/em>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;ul>
+&lt;li>1st pass gives the general idea
+&lt;ul>
+&lt;li>5-10 mins&lt;/li>
+&lt;li>get a bird&amp;rsquo;s-eye view and decide whether to do any more passes or not&lt;/li>
+&lt;li>&lt;strong>Do the following&lt;/strong>
+&lt;ol>
+&lt;li>carefully read the &lt;em>title, abstract and introduction&lt;/em>&lt;/li>
+&lt;li>read the &lt;em>section and sub-section headings&lt;/em>, but ignore everything else&lt;/li>
+&lt;li>read the &lt;em>conclusions&lt;/em>&lt;/li>
+&lt;li>glance over the &lt;em>references&lt;/em>, mentally ticking off the already read ones&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>at the end of this pass, &lt;em>five Cs&lt;/em> should be answered
+&lt;ol>
+&lt;li>&lt;em>Category&lt;/em>: What type of paper is this? A measurement paper? An analysis of an existing system? A description of a research prototype?&lt;/li>
+&lt;li>&lt;em>Context&lt;/em>: Which other paper is it related to? Which theoretical bases were used to analyze the problem?&lt;/li>
+&lt;li>&lt;em>Correctness&lt;/em>: Do the assumptions appear to be valid?&lt;/li>
+&lt;li>&lt;em>Contributions&lt;/em>: What are the paper&amp;rsquo;s main contributions?&lt;/li>
+&lt;li>&lt;em>Clarity&lt;/em>: Is the paper well written?&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>this pass is adequate for papers that aren&amp;rsquo;t in the research area, but someday prove relevant&lt;/li>
+&lt;li>&lt;strong>Most reviewers make only one pass, take care to choose &lt;em>coherent section and sub-section titles&lt;/em> and write &lt;em>concise and comprehensive abstracts&lt;/em>.&lt;/strong> If a reviewer cannot understand the gist after one pass, most probably will be rejected; if a reader cannot understand the higlights of the paper after &lt;em>5 mins&lt;/em>, the paper will likely never be read.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;ul>
+&lt;li>2nd pass helps to grasp the paper&amp;rsquo;s content, not the details
+&lt;ul>
+&lt;li>read the paper with greater care, but ignore details such as proofs&lt;/li>
+&lt;li>&lt;strong>Do the following&lt;/strong>
+&lt;ol>
+&lt;li>Look carefully at the figures, diagrams and other illustrations in the paper. Pay special attention to graphs. Are the axes properly labeled? Are results shown with error bars, so that conclusions are statistically significant?&lt;/li>
+&lt;li>Remember to mark relevant unread references for further reading&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>up to &lt;em>1 hour&lt;/em>&lt;/li>
+&lt;li>should be able to &lt;em>summarize the main thrust&lt;/em> of the paper&lt;/li>
+&lt;li>if not understood at this point, choose:
+&lt;ul>
+&lt;li>set the paper aside&lt;/li>
+&lt;li>return to the paper later, perhaps after reading the background material&lt;/li>
+&lt;li>persevere and go on to the 3rd pass&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;ul>
+&lt;li>3rd pass helps to understand the paper in depth
+&lt;ul>
+&lt;li>attempt to &lt;em>virtually re-implement&lt;/em> the paper&lt;/li>
+&lt;li>identify and challenge every assumption in every statement&lt;/li>
+&lt;li>jot down ideas for future work&lt;/li>
+&lt;li>&lt;em>4 or 5 hours&lt;/em> for beginners, &lt;em>an hour&lt;/em> for an experienced reader&lt;/li>
+&lt;li>should be able to reconstruct the entire structure of the paper from memory, identify the strong and weak points.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="references">References&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="http://ccr.sigcomm.org/online/files/p83-keshavA.pdf" target="_blank" rel="noopener">http://ccr.sigcomm.org/online/files/p83-keshavA.pdf&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Kafka vs RabbitMQ</title><link>https://vjabrayilov.github.io/post/kafkavsrabbit/</link><pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/post/kafkavsrabbit/</guid><description>&lt;ul>
 &lt;li>&lt;a href="#rabbitmq">RabbitMQ&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#kafka">Kafka&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#rabbitmq-architecture">RabbitMQ Architecture&lt;/a>&lt;/li>

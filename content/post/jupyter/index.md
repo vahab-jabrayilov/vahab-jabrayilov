@@ -13,6 +13,7 @@ image:
   caption: ''
   focal_point: ''
 featured: true
+draft: true
 ---
 
 ```python

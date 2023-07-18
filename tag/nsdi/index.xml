@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>nsdi | Vahab Jabrayilov</title><link>https://vjabrayilov.github.io/tag/nsdi/</link><atom:link href="https://vjabrayilov.github.io/tag/nsdi/index.xml" rel="self" type="application/rss+xml"/><description>nsdi</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 21 Jul 2022 00:00:00 +0000</lastBuildDate><image><url>https://vjabrayilov.github.io/media/icon_hufdc9ffe2c12a5bb5ad2cfdfce17ddfaa_56068_512x512_fill_lanczos_center_3.png</url><title>nsdi</title><link>https://vjabrayilov.github.io/tag/nsdi/</link></image><item><title>Firecracker: Lightweight Virtualization for Serverless Applications</title><link>https://vjabrayilov.github.io/firecracker/</link><pubDate>Thu, 21 Jul 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/firecracker/</guid><description>&lt;ul>
+&lt;li>&lt;a href="#summary">Summary&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#background">Background&lt;/a>
+&lt;ul>
+&lt;li>&lt;a href="#virtualization">Virtualization&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#lambda">Lambda&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#interesting-points">Interesting points&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;a href="#references">References&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="summary">Summary&lt;/h2>
+&lt;ul>
+&lt;li>Firecracker is a high-performance virtualization solution built to run Amazon’s serverless applications securely and with minimal resources. It now does so at immense scale.&lt;/li>
+&lt;/ul>
+&lt;h2 id="background">Background&lt;/h2>
+&lt;h3 id="virtualization">Virtualization&lt;/h3>
+&lt;ul>
+&lt;li>Initially, a separate VM per Lambda customer, but existing VM solutions required significant resources, hence resulting in non-optimal utilization.&lt;/li>
+&lt;li>2 types of hypervisors
+&lt;ul>
+&lt;li>Type 1
+&lt;ul>
+&lt;li>directly integrated in the hardware&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Type 2
+&lt;ul>
+&lt;li>run an operating system on top of the hardware, then run the hypervisor on top of that operating system&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://www.micahlerner.com/assets/firecracker/Hypervisor.svg" alt="https://www.micahlerner.com/assets/firecracker/Hypervisor.svg" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;ul>
+&lt;li>Linux has a hypervisor built into the kernel - Kernel Virtual Machine, arguably a &lt;em>Type 1&lt;/em> hypervisor.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://www.kernel.org/doc/ols/2007/ols2007v1-pages-225-230.pdf" target="_blank" rel="noopener">ols2007v1-pages-225-230.pdf&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>virtio&lt;/strong> (linux provided interface) allows the user space kernel components to interact with the host OS. Rather than passing all interactions with a guest kernel directly to the host kernel, some functions (particularly, device interactions) go from a guest kernel to a virtual machine monitor (a.k.a VMM) (a popular example: QEMU)&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://www.usenix.org/legacy/publications/library/proceedings/usenix05/tech/freenix/full_papers/bellard/bellard.pdf" target="_blank" rel="noopener">bellard.pdf&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>Cons(-) of QEMU:
+&lt;ul>
+&lt;li>significant amount of code ⇒ more code, more potential attack surface&lt;/li>
+&lt;li>redundant functionality, that Lambda would never use: such as support for USB drivers&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>So, &lt;strong>crosvm&lt;/strong> is chosen (a VMM open-sourced by Google and developed for ChromeOS)
+&lt;a href="https://prilik.com/blog/post/crosvm-paravirt/" target="_blank" rel="noopener">Paravirtualized Devices in crosvm - a Performance Panacea for Modern VMs&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="lambda">Lambda&lt;/h3>
+&lt;ul>
+&lt;li>When a lambda is invoked, the ensuing HTTP request hits an AWS Load Balancer.&lt;/li>
+&lt;/ul>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://www.micahlerner.com/assets/firecracker/arch.png" alt="https://www.micahlerner.com/assets/firecracker/arch.png" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;ul>
+&lt;li>4 main components:
+&lt;ul>
+&lt;li>Workers
+&lt;ul>
+&lt;li>the component running lambda’s code&lt;/li>
+&lt;li>each runs many MicroVMs in “slots” and other services schedule code to be run in the MicoVMs when a lambda is invoked&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Frontend
+&lt;ul>
+&lt;li>entrance into the lambda system&lt;/li>
+&lt;li>receives invoke requests and communicate with Worker Manager to determine where to run the lambda. then directly communicates with the Workers&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Worker Manager
+&lt;ul>
+&lt;li>ensures that the same lambda is routed to the same set of Workers&lt;/li>
+&lt;li>keep tracks of where a lambda has been scheduled previously&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Placement service
+&lt;ul>
+&lt;li>makes scheduling decisions to assign a lambda invocation to a worker&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Lambda Worker Architecture
+&lt;ul>
+&lt;li>Firecracker VM&lt;/li>
+&lt;li>Shim process
+&lt;ul>
+&lt;li>process inside of the VM that communicates with an external side car called the Micro Manager&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Micro Manager
+&lt;ul>
+&lt;li>a sidecar communicating over TCP with a Shim process&lt;/li>
+&lt;li>reports metadata received back to the Placement service&lt;/li>
+&lt;li>can be called from the Frontend to invoke a specific function&lt;/li>
+&lt;li>on the function completion, receives the response from the shim process passing back to the client as needed&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://www.micahlerner.com/assets/firecracker/lambdaworker.png" alt="https://www.micahlerner.com/assets/firecracker/lambdaworker.png" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;h3 id="interesting-points">Interesting points&lt;/h3>
+&lt;ul>
+&lt;li>Only IO performance was inferior, and they argue that causes are no flushing to disk and an implementation of block IOs which performs IO serially; async IO support with io_uring can resolve it, there is an issue about it in github.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://github.com/firecracker-microvm/firecracker/issues/1600" target="_blank" rel="noopener">[Perf] Implement async IO for the block device using io_uring · Issue #1600 · firecracker-microvm/firecracker&lt;/a>&lt;/p>
+&lt;p>&lt;a href="https://unixism.net/loti/what_is_io_uring.html" target="_blank" rel="noopener">Lord of the io_uring&lt;/a>&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;ul>
+&lt;li>blog post: &lt;a href="https://www.micahlerner.com/2021/06/17/firecracker-lightweight-virtualization-for-serverless-applications.html" target="_blank" rel="noopener">Firecracker: Lightweight Virtualization for Serverless Applications&lt;/a>&lt;/li>
+&lt;li>paper: (&lt;a href="https://www.usenix.org/conference/nsdi20/presentation/agache" target="_blank" rel="noopener">https://www.usenix.org/conference/nsdi20/presentation/agache&lt;/a>)&lt;/li>
+&lt;/ul></description></item></channel></rss>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>2017 | Vahab Jabrayilov</title><link>https://vjabrayilov.github.io/tag/2017/</link><atom:link href="https://vjabrayilov.github.io/tag/2017/index.xml" rel="self" type="application/rss+xml"/><description>2017</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 05 Sep 2022 00:00:00 +0000</lastBuildDate><image><url>https://vjabrayilov.github.io/media/icon_hufdc9ffe2c12a5bb5ad2cfdfce17ddfaa_56068_512x512_fill_lanczos_center_3.png</url><title>2017</title><link>https://vjabrayilov.github.io/tag/2017/</link></image><item><title>Will Serverless End the Dominance of Linux in the Cloud? HotOS’17</title><link>https://vjabrayilov.github.io/endoflinux/</link><pubDate>Mon, 05 Sep 2022 00:00:00 +0000</pubDate><guid>https://vjabrayilov.github.io/endoflinux/</guid><description>&lt;h2 id="review">Review&lt;/h2>
+&lt;p>It’s a very short read and one of the early works. The main topic of discussion is the shortcomings of the Linux kernel for the current serverless paradigm. They argue that native container abstraction is ill-suited to be run as a unit of execution for serverless. They show that bypassing the kernel with unikernels can yield at least a factor of 6 better latency and throughput. While the unit of execution in the cloud shrinks, the complexity of the kernel is growing. It’s hard to introduce new abstractions to the kernel as it takes a lot of development investment and the kernel and its community have an inertia towards fast development.&lt;/p>
+&lt;p>There are 3 potential approaches to accommodate the serverless in the cloud:&lt;/p>
+&lt;ul>
+&lt;li>Modify or extend the kernel&lt;/li>
+&lt;li>Bypass the kernel&lt;/li>
+&lt;li>Replace the kernel&lt;/li>
+&lt;/ul>
+&lt;p>Very little of the current complexity of the kernel is required for serverless. Two main requirements for the serverless are well isolation from the other tenants as well as host platform, and lambda actions must perform well. The first one removes the solely implementation on top of the native linux processes from the scene. The latter one has two main constituents, low latency and higher throughput. According to the authors, the target goal for the latency is to fetch and start any action under 100ms without any cached state. To cover the financial objectives, achievable throughput should be at least 125.23 actions per second(One can see a back of the envelope calculation in the paper; simply they do calculations based on the pricing of AWS Lambda and EC2).&lt;/p>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fec8f177-e353-425b-a0fa-2e682f023448/Screenshot_from_2022-09-06_12-43-19.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;amp;X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220906%2Fus-west-2%2Fs3%2Faws4_request&amp;amp;X-Amz-Date=20220906T084434Z&amp;amp;X-Amz-Expires=86400&amp;amp;X-Amz-Signature=055a2800d2ccf91387a10acdde046d84103bda37b5ea19c5f73e70a99c729240&amp;amp;X-Amz-SignedHeaders=host&amp;amp;response-content-disposition=filename%20%3D%22Screenshot%2520from%25202022-09-06%252012-43-19.png%22&amp;amp;x-id=GetObject" alt="img1" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;p>Enhancing the Linux kernel and its container-related capabilities is the favored approach by the industry due to the large investment and dependency on the kernel itself. Moreover, containers are the most popular configuration and existing unit of execution in the current systems. To introduce the support for containers, the Linux kernel underwent major changes to include new abstractions like cgroups and namespaces. But the next significant changes can take longer, because the complexity affects implementation time. It is either hard to implement something in the kernel, and/or too hard to optimize the relevant code paths in the kernel, and/or too hard to secure the kernel.&lt;/p>
+&lt;p>The second approach is to bypass the complexity of the kernel and add another layer from which actions(lambda’s) can be started. It can be either achieved on top of hypervisor or unikernel monitors. Bypassing the kernel is commonplace for data plane network services using hardware-level virtualization and software frameworks like DPDK.&lt;/p>
+&lt;p>Replacing the kernel with a new and custom designed for serverless type workloads is the way authors emphasize. They serve following alternative design considerations for the new kernel:
+Non -preemptive scheduling
+Limited set of I/O related calls
+No IPC
+No process synchronization&lt;/p>
+&lt;p>To support their arguments, they do a very simple experiment, running a simple “Hello” example in 3 ways. The baseline is running “echo “Hello”” as a native process, to experiment the containerization they run a similar binary inside the most minimal container via runc, statically linking the binary, without all the overhead of container runtime(Not using docker, networking, and etc.). To show the effect of kernel bypass, a unikernel(ukvm) running Solo5/ukvm is used. Results support the above mentioned arguments.&lt;/p>
+&lt;p>
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/aa8d7914-6ff6-4229-85cc-ae94161c503a/Screenshot_from_2022-09-06_12-40-34.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;amp;X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220906%2Fus-west-2%2Fs3%2Faws4_request&amp;amp;X-Amz-Date=20220906T084345Z&amp;amp;X-Amz-Expires=86400&amp;amp;X-Amz-Signature=e1132f5068c939c24f4338ffa78dd3b5ce06206241eaf41c94ad398cc21169e9&amp;amp;X-Amz-SignedHeaders=host&amp;amp;response-content-disposition=filename%20%3D%22Screenshot%2520from%25202022-09-06%252012-40-34.png%22&amp;amp;x-id=GetObject" alt="img2" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://dl.acm.org/doi/pdf/10.1145/3102980.3103008" target="_blank" rel="noopener">Will Serverless End the Dominance of Linux in the Cloud? &lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>
